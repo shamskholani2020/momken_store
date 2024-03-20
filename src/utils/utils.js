@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { io } from "socket.io-client";
 import { StoreContext } from "../context/store/store";
 
-export const baseURL = "http://localhost:3000";
+export const baseURL = "http://localhost:3005";
 
 // export const baseURL = "https://server.momken.app";
 
