@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { baseURL, headers, socket } from "../../utils/utils";
+import React, { useEffect, useState } from "react";
+import { baseURL, headers } from "../../utils/utils";
 
-export const StoreContext = React.createContext(null);
+export const StoreContext = React.createContext();
 
 // eslint-disable-next-line react/prop-types
 export const StoreProvider = ({ children }) => {
@@ -64,16 +63,16 @@ export const StoreProvider = ({ children }) => {
       return [...elements];
     });
 
-    socket.emit("storeEdit", { _id: store?.client, elements: elements });
+    // socket.emit("storeEdit", { _id: store?.client, elements: elements });
   };
 
-  useEffect(() => {
-    socket.on("storeEdit", (data) => {
-      if (data?._id == store?.client) {
-        setElements(data?.elements);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   socket.on("storeEdit", (data) => {
+  //     if (data?._id == store?.client) {
+  //       setElements(data?.elements);
+  //     }
+  //   });
+  // }, []);
 
   const handleUpdate = () => {
     setStore((prev) => {
@@ -82,10 +81,10 @@ export const StoreProvider = ({ children }) => {
       };
     });
 
-    socket.emit("updatestore", {
-      store: store,
-      storeName: store?.client,
-    });
+    // socket.emit("updatestore", {
+    //   store: store,
+    //   storeName: store?.client,
+    // });
   };
 
   const value = {
