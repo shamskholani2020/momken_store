@@ -1,32 +1,31 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { baseURL, headers } from "../../utils/utils";
+import { baseURL, headers, storeId } from "../../utils/utils";
 
 export const StoreContext = React.createContext();
 
 // eslint-disable-next-line react/prop-types
 export const StoreProvider = ({ children }) => {
-  const [store, setStore] = useState();
+  const [store, setStore] = useState(null);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFetchStore = () => {
     setIsLoading(true);
+    console.log("THIS IS STOREID: ", storeId);
 
     axios
       .get(`${baseURL}/store`, headers)
-      .then((value) => {
-        if (value.data.status) {
-          setStore(value.data.data[0]);
-        }
+      .then((response) => {
+        const temp = response.data.data[0];
+        setStore(temp);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log("THIS IS ERR: ", err);
+        console.error("Error fetching store data:", err);
         setIsLoading(false);
       });
   };
-
   const [elements, setElements] = useState([]);
 
   useEffect(() => {
@@ -47,51 +46,19 @@ export const StoreProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("THIS IS STORE:", store);
+    if (store) {
+      setIsLoading(false);
+    }
+  }, [store]);
+
   const [activeBreakpoint, setActiveBreakpoint] = useState("lg");
 
-  const handleSelect = (el) => {
-    if (elements?.filter((item) => item?._id == el?._id)?.length > 0) {
-      const index = elements?.findIndex((ele) => ele?._id == el?._id);
-      elements?.splice(index, 1);
-    } else {
-      elements.splice(0, elements?.length);
-
-      elements.push(el);
-    }
-
-    setElements((prev) => {
-      return [...elements];
-    });
-
-    // socket.emit("storeEdit", { _id: store?.client, elements: elements });
-  };
-
-  // useEffect(() => {
-  //   socket.on("storeEdit", (data) => {
-  //     if (data?._id == store?.client) {
-  //       setElements(data?.elements);
-  //     }
-  //   });
-  // }, []);
-
-  const handleUpdate = () => {
-    setStore((prev) => {
-      return {
-        ...store,
-      };
-    });
-
-    // socket.emit("updatestore", {
-    //   store: store,
-    //   storeName: store?.client,
-    // });
-  };
-
   const value = {
-    handleUpdate,
     activeBreakpoint,
     setActiveBreakpoint,
-    handleSelect,
+
     elements,
     setElements,
     store,

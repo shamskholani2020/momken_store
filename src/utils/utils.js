@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export const baseURL = "https://server.momken.app";
 
-const params = new URLSearchParams(window.location.search);
+// const params = new URLSearchParams(window.location.search);
 
 export const storeId = window.location.hostname.split(".")[0];
 // export const storeId = params.get("store");
@@ -37,7 +37,7 @@ export const isDraft = () => {
   return params.get("isDraft") === "true" ? true : false;
 };
 
-export const getEdits = (setStore) => {};
+export const getEdits = () => {};
 
 export const useTheme = () => {
   const { store } = useContext(StoreContext);

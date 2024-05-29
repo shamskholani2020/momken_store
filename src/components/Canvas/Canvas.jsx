@@ -1,16 +1,16 @@
-import { Reorder, motion } from "framer-motion";
-import { useContext, useMemo } from "react";
+import { motion } from "framer-motion";
+import { lazy } from "react";
 
-import { StoreContext } from "../../context/store/store";
-import { useActiveBreakpoint, useTheme } from "../../utils/utils";
-import NavbarBuilder from "./SectionBuilder/Components/NavbarBuilder";
-import SectionBuilder from "./SectionBuilder/SectionBuilder";
 import { useState } from "react";
+import { useActiveBreakpoint, useTheme } from "../../utils/utils";
+
+const NavbarBuilder = lazy(() =>
+  import("./SectionBuilder/Components/NavbarBuilder")
+);
+const SectionBuilder = lazy(() => import("./SectionBuilder/SectionBuilder"));
 
 export default function Canvas({ currentPage }) {
   const theme = useTheme();
-
-  const { store } = useContext(StoreContext);
 
   const activeBreakpoint = useActiveBreakpoint();
 
@@ -45,8 +45,6 @@ export default function Canvas({ currentPage }) {
       className="flex flex-col items-center justify-between min-h-screen h-fit w-full relative"
     >
       <NavbarBuilder breakpoint={activeBreakpoint} />
-
-      {window.location.pathname}
 
       {currentPage?.sections?.filter((el) => !el?.isDeleted)?.length == 0 && (
         <div className="h-screen w-full bg-primary/5 flex flex-col gap-5 items-center justify-center">

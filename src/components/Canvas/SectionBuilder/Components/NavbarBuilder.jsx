@@ -1,10 +1,8 @@
-import { useContext } from "react";
-
-import { IoGlobe } from "react-icons/io5";
 import { BiSearch, BiShoppingBag } from "react-icons/bi";
+import { IoGlobe } from "react-icons/io5";
 import { MdAccountCircle, MdMenu } from "react-icons/md";
-import { useActiveBreakpoint, useTheme } from "../../../../utils/utils";
 import { useNavigate } from "react-router-dom";
+import { useActiveBreakpoint, useTheme } from "../../../../utils/utils";
 
 export default function NavbarBuilder() {
   const breakpoint = useActiveBreakpoint();
@@ -33,8 +31,19 @@ export default function NavbarBuilder() {
         }}
         className="flex  flex-row justify-between items-center w-full absolute  h-24 shadow-sm top-0 start-0 z-50"
       >
-        {breakpoint == "lg" && (
-          <div className="flex flex-row justify-start items-center gap-5">
+        <div className="flex flex-row justify-center items-center">
+          <h1
+            onClick={() => {
+              nav("/");
+            }}
+            className="text-xl text-center font-medium btn btn-ghost btn-sm"
+          >
+            Store
+          </h1>
+        </div>
+
+        {/* {breakpoint == "lg" && (
+          <div className="w-full flex flex-row justify-center items-center gap-5">
             {[
               {
                 name: "Home",
@@ -63,18 +72,7 @@ export default function NavbarBuilder() {
               );
             })}
           </div>
-        )}
-
-        <div className="flex flex-row justify-center items-center">
-          <h1
-            onClick={() => {
-              nav("/");
-            }}
-            className="text-xl text-center font-medium"
-          >
-            S
-          </h1>
-        </div>
+        )} */}
 
         {breakpoint == "lg" || breakpoint == "md" ? (
           <div className="flex flex-row justify-end items-center gap-5">

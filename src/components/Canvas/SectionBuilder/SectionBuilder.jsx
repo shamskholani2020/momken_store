@@ -1,17 +1,18 @@
 import { motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { lazy, useContext, useState } from "react";
 import { UiEditorContext } from "../../../context/UiEditor/UiEditor";
 
 import { getBackgroundColorProps } from "../../getBackgroundColorProps";
 
-import ButtonBuilder from "./Components/ButtonBuilder";
-import DivBuilder from "./Components/DivBuilder";
-import GridBuilder from "./Components/GridBuilder";
-import IconBuilder from "./Components/IconBuilder";
-import ProductBuilder from "./Components/ProductBuilder";
-import TextBuilder from "./Components/TextBuilder";
 import { getAnimationProps } from "../../getAnimationProps";
 import { useNavigate } from "react-router-dom";
+
+const TextBuilder = lazy(() => import("./Components/TextBuilder"));
+const ProductBuilder = lazy(() => import("./Components/ProductBuilder"));
+const IconBuilder = lazy(() => import("./Components/IconBuilder"));
+const GridBuilder = lazy(() => import("./Components/GridBuilder"));
+const DivBuilder = lazy(() => import("./Components/DivBuilder"));
+const ButtonBuilder = lazy(() => import("./Components/ButtonBuilder"));
 
 export default function SectionBuilder({ key, el, activeBreakpoint }) {
   const { store, pages } = useContext(UiEditorContext);
@@ -38,7 +39,7 @@ export default function SectionBuilder({ key, el, activeBreakpoint }) {
           nav("/product-details?productId=" + el?.event?.value);
         } else if (el?.event?.type == "page") {
           const page = pages?.find((pg) => pg?.url == el?.event?.value);
-          alert(page?.name);
+          nav(el?.event?.value);
         }
       }}
       style={{

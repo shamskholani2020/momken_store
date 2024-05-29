@@ -1,7 +1,7 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import { getBackgroundColorProps } from "../../../getBackgroundColorProps";
-import { allIcons } from "../../../../utils/allIcons";
+import allIcons from "../../../../utils/allIcons";
 
 export default function IconBuilder({ el, activeBreakpoint }) {
   return (
